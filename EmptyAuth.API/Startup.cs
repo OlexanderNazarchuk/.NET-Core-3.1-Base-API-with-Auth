@@ -57,7 +57,6 @@ namespace EmptyAuth.API
 				options.SubstituteApiVersionInUrl = false;
 				options.AssumeDefaultVersionWhenUnspecified = true;
 			});
-
 			services.AddApiVersioning(options =>
 			{
 				options.ReportApiVersions = false;
@@ -87,8 +86,10 @@ namespace EmptyAuth.API
 			}
 
 			app.InitializeServices();
+
 			app.UseHttpsRedirection();
 			app.UseHsts();
+
 			app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
 			app.UseApiVersioning();
@@ -105,6 +106,8 @@ namespace EmptyAuth.API
 			});
 
 			app.UseRouting();
+
+			app.UseHttpStatusCodeExceptionMiddleware();
 
 			app.UseAuthentication();
 			app.UseAuthorization();
