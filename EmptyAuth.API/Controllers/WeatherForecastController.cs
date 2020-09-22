@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace EmptyAuth.API.Controllers
 {
 	[ApiController]
-	[Route("[controller]")]
+	[Route("api/[controller]/[action]")]
 	[Authorize]
 	public class WeatherForecastController : ControllerBase
 	{

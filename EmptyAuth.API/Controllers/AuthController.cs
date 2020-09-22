@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using EmptyAuth.Core.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +12,31 @@ namespace EmptyAuth.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly IAuthService _authService;
+        public AuthController(IAuthService authService)
+        {
+            _authService = authService;
+        }
 
+        [HttpGet, MapToApiVersion("1")]
+        [ProducesResponseType(typeof(string), 200)]
+        //[ProducesResponseType(typeof(string), 400)]
+        public async Task<IActionResult> Login(string username, string password)
+        {
+            var result = await _authService.LoginAsync(username, password);
+            if (string.IsNullOrEmpty(result))
+                return BadRequest();
+            return Ok(result);
+        }
+
+
+        [HttpPost, MapToApiVersion("1")]
+        [ProducesResponseType(typeof(string), 200)]
+        //[ProducesResponseType(typeof(string), 400)]
+        public async Task<IActionResult> Register(string username, string password)
+        {
+            await _authService.RegisterAsync(username, password);
+            return Ok();
+        }
     }
 }

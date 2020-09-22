@@ -32,7 +32,7 @@ namespace EmptyAuth.Core.Services
 			_roleManager = roleManager;
 		}
 
-		public async Task<string> Login(string username, string password)
+		public async Task<string> LoginAsync(string username, string password)
 		{
 			var appUser = await _userManager.FindByEmailAsync(username);
 			if (appUser != null)
@@ -45,10 +45,10 @@ namespace EmptyAuth.Core.Services
 					return token;
 				}
 			}
-			throw new Exception();
+			return null;
 		}
 
-		public async Task Register(string username, string password)
+		public async Task RegisterAsync(string username, string password)
 		{
 			var appUser = await _userManager.FindByEmailAsync(username);
 			if (appUser == null)

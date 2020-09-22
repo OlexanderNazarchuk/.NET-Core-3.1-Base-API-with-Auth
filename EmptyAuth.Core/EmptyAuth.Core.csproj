@@ -9,12 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\EmptyAuth.Common\EmptyAuth.Common.csproj" />
     <ProjectReference Include="..\EmptyAuth.Data\EmptyAuth.Data.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\EmptyAuth.Models\EmptyAuth.Models.csproj" />
   </ItemGroup>
 
 </Project>
