@@ -40,7 +40,8 @@ namespace EmptyAuth.Core.Services
 				var loginResult = await _signInManager.PasswordSignInAsync(username, password, false, false);
 				if (loginResult.Succeeded)
 				{
-					var userDto = new UserDto { Id = appUser.Id, Name = appUser.UserName };
+					var claims = await _userManager.GetClaimsAsync(appUser);
+					var userDto = new UserDto { Id = appUser.Id, Name = appUser.UserName};
 					var token = await BuildTokenHelper.CreateJwtAsync(userDto, _configuration.Issuer, _configuration.Audience, _configuration.SigningCredentials, _configuration.Expiration);
 					return token;
 				}
@@ -57,7 +58,7 @@ namespace EmptyAuth.Core.Services
 				var result = await _userManager.CreateAsync(appUser, password);
 				if (result.Succeeded)
 				{
-					var role = await _roleManager.FindByNameAsync("OrganizationOwner");
+					var role = await _roleManager.FindByNameAsync(Data.Enums.Role.OrganizationOwner.ToString());
 					var claims = await _roleManager.GetClaimsAsync(role);
 					await _userManager.AddClaimsAsync(appUser, claims);
 					return;

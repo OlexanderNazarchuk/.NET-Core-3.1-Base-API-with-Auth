@@ -37,6 +37,7 @@ namespace EmptyAuth.Core.Helpers
 		private static Task<ClaimsIdentity> CreateClaimsIdentities(UserDto user)
 		{
 			ClaimsIdentity claimsIdentity = new ClaimsIdentity();
+
 			claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
 			claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 			//claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));

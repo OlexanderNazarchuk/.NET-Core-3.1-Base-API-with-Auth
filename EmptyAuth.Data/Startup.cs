@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using Microsoft.AspNetCore.Identity;
 using EmptyAuth.Data.Entities;
+using EmptyAuth.Data.Seeders;
 
 namespace EmptyAuth.Data
 {
@@ -35,7 +36,7 @@ namespace EmptyAuth.Data
 
 				var context = scope.ServiceProvider.GetService<AppDbContext>();
 				//SEEDRS
-				//LanguageVariantsSeader.SeedLanguageVariants(context);
+				RoleSeeder.Seed(context);
 			}
 		}
 	}

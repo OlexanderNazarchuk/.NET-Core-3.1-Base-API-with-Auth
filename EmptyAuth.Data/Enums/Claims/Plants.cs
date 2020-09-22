@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EmptyAuth.Data.Enum.Claims
+namespace EmptyAuth.Data.Enums.Claims
 {
 	public enum Plant
 	{
