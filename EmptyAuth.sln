@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmptyAuth.Models", "EmptyAuth.Models\EmptyAuth.Models.csproj", "{9302D208-5B37-480E-A8AA-8F4CCCE7C78C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{9AEED7C6-C490-4489-A34D-278662529583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AEED7C6-C490-4489-A34D-278662529583}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AEED7C6-C490-4489-A34D-278662529583}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9302D208-5B37-480E-A8AA-8F4CCCE7C78C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9302D208-5B37-480E-A8AA-8F4CCCE7C78C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9302D208-5B37-480E-A8AA-8F4CCCE7C78C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9302D208-5B37-480E-A8AA-8F4CCCE7C78C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
