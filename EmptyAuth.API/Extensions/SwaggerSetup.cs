@@ -27,10 +27,10 @@ namespace EmptyAuth.API.Extensions
 
 						options.SwaggerDoc(description.GroupName, new OpenApiInfo()
 						{
-							Title = "ReferenceDataService API",
+							Title = "EmptyAuth API",
 							Version = $"v{description.ApiVersion.ToString()}",
-							Description = "API Documentation - ReferenceDataService",
-							Contact = new OpenApiContact() { Name = "Intobi: Custom Software Development Company", Url = new Uri("https://localhost:44325/") },
+							Description = "API Documentation - EmptyAuth",
+							Contact = new OpenApiContact() { Name = "Aleksandr Nazarchuk", Url = new Uri("https://www.linkedin.com/in/aleksander-nazarchuk-4867aa139/") },
 						});
 						options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
 						{
