@@ -1,6 +1,8 @@
 ﻿using EmptyAuth.Common.Enums.Claims;
+using EmptyAuth.Models.AuthModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,8 +21,6 @@ namespace EmptyAuth.API.Attributes
 			foreach (var claim in claims)
 				Arguments = new object[] { new Claim(typeof(Organization).Name, claim.ToString()) };
 		}
-		
-
 	}
 
 	public class ClaimRequirementFilter : IAuthorizationFilter
@@ -34,14 +34,11 @@ namespace EmptyAuth.API.Attributes
 
 		public void OnAuthorization(AuthorizationFilterContext context)
 		{
+			var permissionsClaim = context.HttpContext.User
+				.Claims.FirstOrDefault(c => c.Type == "Permissions").Value;
+			var org = JsonConvert.DeserializeObject<OrganizationDto>(permissionsClaim);
 
-
-			using (StreamReader reader = new StreamReader(context.HttpContext.Request.Body))
-			{
-				string text = reader.ReadToEnd();
-			}
-			var hasClaim = context.HttpContext.User
-				.Claims.Any(c => c.Type == _claim.Type && c.Value == _claim.Value);
+			var hasClaim = org.Claims.Any(x => x == _claim.Type+"."+_claim.Value);
 			if (!hasClaim)
 			{
 				context.Result = new ForbidResult();

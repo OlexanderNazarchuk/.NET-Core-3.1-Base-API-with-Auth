@@ -25,6 +25,10 @@ namespace EmptyAuth.Data
             builder.AddConfiguration(new UserLoginConfigration());
             builder.AddConfiguration(new RoleConfigration());
             builder.AddConfiguration(new RoleClaimConfigration());
+
+            builder.AddConfiguration(new OrganizationConfiguration());
+            builder.AddConfiguration(new PlantConfiguration());
+            builder.AddConfiguration(new PlantUserClaimConfiguration());
         }
 
         public DbSet<User> Users { get; set; }
@@ -34,5 +38,9 @@ namespace EmptyAuth.Data
         public DbSet<UserLogin> UserLogins { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleClaim> RoleClaims { get; set; }
+
+        public DbSet<Organization> Organizations { get; set; }
+        public DbSet<Plant> Plants { get; set; }
+        public DbSet<PlantUserClaim> PlantUserClaims { get; set; }
     }
 }

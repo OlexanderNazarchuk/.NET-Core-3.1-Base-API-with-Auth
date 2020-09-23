@@ -40,12 +40,10 @@ namespace EmptyAuth.Core.Helpers
 
 			ClaimsIdentity claimsIdentity = new ClaimsIdentity();
 
-			claimsIdentity.AddClaims(user.Claims);
 
 			claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
-			claimsIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 			claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-			claimsIdentity.AddClaim(new Claim("OrganizationId", user.OrganizationId.ToString()));
+			claimsIdentity.AddClaim(new Claim("Permissions", JsonConvert.SerializeObject(user.Organization)));
 
 			return Task.FromResult(claimsIdentity);
 		}

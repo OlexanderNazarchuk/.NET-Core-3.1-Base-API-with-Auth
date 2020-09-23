@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmptyAuth.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200923133004_AddPlantTables")]
+    [Migration("20200923134401_AddPlantTables")]
     partial class AddPlantTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

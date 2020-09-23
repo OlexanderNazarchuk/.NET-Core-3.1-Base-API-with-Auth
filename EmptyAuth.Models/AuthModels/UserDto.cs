@@ -10,7 +10,21 @@ namespace EmptyAuth.Models.AuthModels
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Email { get; set; }
-		public int OrganizationId { get; set; }
-		public IEnumerable<Claim> Claims { get; set; }
+		public OrganizationDto Organization { get; set; }
+	}
+
+	public class OrganizationDto
+	{
+		public int Id { get; set; }
+		public IList<PlantDto> Plants { get; set; }
+		public IList<string> Claims { get; set; }
+
+	}
+
+	public class PlantDto
+	{
+		public int Id { get; set; }
+		public IList<string> Claims { get; set; }
+		
 	}
 }

@@ -1,9 +1,11 @@
 ﻿using EmptyAuth.Common.Configurations;
 using EmptyAuth.Core.Helpers;
 using EmptyAuth.Core.Interfaces;
+using EmptyAuth.Data;
 using EmptyAuth.Data.Entities;
 using EmptyAuth.Models.AuthModels;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +22,17 @@ namespace EmptyAuth.Core.Services
 		private readonly SignInManager<User> _signInManager;
 		private readonly UserManager<User> _userManager;
 		private readonly RoleManager<Role> _roleManager;
+		private readonly AppDbContext _context;
 
 		public AuthService(
+			AppDbContext context,
 			TokenAuthConfiguration configuration,
 			SignInManager<User> signInManager,
 			UserManager<User> userManager,
 			RoleManager<Role> roleManager
 			)
 		{
+			_context = context;
 			_configuration = configuration;
 			_signInManager = signInManager;
 			_userManager = userManager;
@@ -42,13 +47,31 @@ namespace EmptyAuth.Core.Services
 				var loginResult = await _signInManager.PasswordSignInAsync(username, password, false, false);
 				if (loginResult.Succeeded)
 				{
-					var claims = await _userManager.GetClaimsAsync(appUser);
+					var organizationClaims = await _context.UserClaims.Where(x => x.UserId == appUser.Id)
+						.Select(x=> x.ClaimType + "."+ x.ClaimValue)
+						.ToListAsync();
+
+					var plantClaims = await _context.Organizations.Select(x => new OrganizationDto
+					{
+						Id = x.Id,
+						Plants = x.Plants.Select(x2 => new PlantDto
+						{
+							Id = x2.Id,
+							Claims = x2.PlantUserClaims.Where(x=>x.UserId==appUser.Id).Select(x3 => x3.ClaimType+"."+x3.ClaimValue).ToList(),
+						}).ToList(),
+					})
+					.FirstOrDefaultAsync(x => x.Id == appUser.OrganizationId);
 					var userDto = new UserDto 
 					{ 
 						Id = appUser.Id, 
 						Name = appUser.UserName, 
 						Email = appUser.Email,
-						Claims = claims, OrganizationId = (int)appUser.OrganizationId 
+						Organization = new OrganizationDto()
+						{
+							Id = (int)appUser.OrganizationId,
+							Claims = organizationClaims,
+							Plants = plantClaims.Plants,
+						}
 					};
 					var token = await BuildTokenHelper.CreateJwtAsync(userDto, _configuration.Issuer, _configuration.Audience, _configuration.SigningCredentials, _configuration.Expiration);
 					return token;
