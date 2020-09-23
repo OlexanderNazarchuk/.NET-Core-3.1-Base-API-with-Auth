@@ -1,6 +1,7 @@
 ﻿using EmptyAuth.Data.Entities;
 using EmptyAuth.Models.AuthModels;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -36,11 +37,15 @@ namespace EmptyAuth.Core.Helpers
 
 		private static Task<ClaimsIdentity> CreateClaimsIdentities(UserDto user)
 		{
+
 			ClaimsIdentity claimsIdentity = new ClaimsIdentity();
 
+			claimsIdentity.AddClaims(user.Claims);
+
 			claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, user.Name));
+			claimsIdentity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
 			claimsIdentity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
-			//claimsIdentity.AddClaim(new Claim(ClaimTypes.Name, $"{user.FirstName} {user.LastName}"));
+			claimsIdentity.AddClaim(new Claim("OrganizationId", user.OrganizationId.ToString()));
 
 			return Task.FromResult(claimsIdentity);
 		}

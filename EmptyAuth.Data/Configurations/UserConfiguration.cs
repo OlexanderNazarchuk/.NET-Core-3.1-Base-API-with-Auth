@@ -10,6 +10,9 @@ namespace EmptyAuth.Data.Configurations
         public override void Configure(EntityTypeBuilder<User> entity)
         {
             entity.ToTable("User").HasKey(e => e.Id);
+
+            entity.HasOne(x => x.Organization).WithMany(x => x.Users).HasForeignKey(x => new { x.OrganizationId }).OnDelete(DeleteBehavior.Restrict);
+
         }
     }
 }

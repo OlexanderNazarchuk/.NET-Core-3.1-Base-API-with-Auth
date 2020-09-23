@@ -6,6 +6,10 @@ namespace EmptyAuth.Data.Entities
 {
 	public class User : IdentityUser<int>
 	{
+		public int? OrganizationId {get ;set;}
+		public Organization Organization { get; set; }
+
+		public ICollection<PlantUserClaim> PlantUserClaims { get; set; }
 		public ICollection<UserRole> Roles { get; set; }
 		public ICollection<UserClaim> Claims { get; set; }
 		public ICollection<UserLogin> Logins { get; set; }

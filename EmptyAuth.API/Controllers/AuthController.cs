@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using EmptyAuth.Core.Interfaces;
+using EmptyAuth.Models.AuthModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,10 +34,11 @@ namespace EmptyAuth.API.Controllers
         [HttpPost, MapToApiVersion("1")]
         [ProducesResponseType(typeof(string), 200)]
         //[ProducesResponseType(typeof(string), 400)]
-        public async Task<IActionResult> Register(string username, string password)
+        public async Task<IActionResult> Create(RegisterModel request)
         {
-            await _authService.RegisterAsync(username, password);
+            await _authService.CreateAsync(request.Username, request.Password, request.OrganizationId);
             return Ok();
         }
     }
+
 }

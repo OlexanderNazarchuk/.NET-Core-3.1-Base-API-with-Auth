@@ -6,6 +6,8 @@ using EmptyAuth.Models.AuthModels;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -41,7 +43,13 @@ namespace EmptyAuth.Core.Services
 				if (loginResult.Succeeded)
 				{
 					var claims = await _userManager.GetClaimsAsync(appUser);
-					var userDto = new UserDto { Id = appUser.Id, Name = appUser.UserName};
+					var userDto = new UserDto 
+					{ 
+						Id = appUser.Id, 
+						Name = appUser.UserName, 
+						Email = appUser.Email,
+						Claims = claims, OrganizationId = (int)appUser.OrganizationId 
+					};
 					var token = await BuildTokenHelper.CreateJwtAsync(userDto, _configuration.Issuer, _configuration.Audience, _configuration.SigningCredentials, _configuration.Expiration);
 					return token;
 				}
@@ -49,16 +57,16 @@ namespace EmptyAuth.Core.Services
 			return null;
 		}
 
-		public async Task RegisterAsync(string username, string password)
+		public async Task CreateAsync(string username, string password, int organizationId)
 		{
 			var appUser = await _userManager.FindByEmailAsync(username);
 			if (appUser == null)
 			{
-				appUser = new User { UserName = username, Email = username };
+				appUser = new User { UserName = username, Email = username, OrganizationId = organizationId };
 				var result = await _userManager.CreateAsync(appUser, password);
 				if (result.Succeeded)
 				{
-					var role = await _roleManager.FindByNameAsync(Data.Enums.Role.OrganizationOwner.ToString());
+					var role = await _roleManager.FindByNameAsync(Common.Enums.Role.Admin.ToString());
 					var claims = await _roleManager.GetClaimsAsync(role);
 					await _userManager.AddClaimsAsync(appUser, claims);
 					return;

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EmptyAuth.Data.Enums
+namespace EmptyAuth.Common.Enums
 {
 	public enum Role
 	{
 		Admin,
-		OrganizationOwner,
-		PlantOwner,
+		User,
+		Viewer,
 	}
 }
