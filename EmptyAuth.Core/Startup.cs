@@ -14,6 +14,7 @@ namespace EmptyAuth.Core
 			services.ConfigureData(connectionString);
 
 			services.AddTransient<IAuthService, AuthService>();
+			services.AddTransient<IPlantService, PlantService>();
 		}
 		public static void InitializeServices(this IApplicationBuilder app)
 		{

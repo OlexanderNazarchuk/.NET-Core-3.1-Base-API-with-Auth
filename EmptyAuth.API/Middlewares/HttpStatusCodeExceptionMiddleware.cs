@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace EmptyAuth.API.Middlewares
 {
@@ -21,10 +22,10 @@ namespace EmptyAuth.API.Middlewares
 			{
 				await next(context);
 			}
-			//catch (HttpStatusCodeException ex)
-			//{
-			//	await HandleExceptionAsync(context, ex);
-			//}
+			catch (HttpResponseException ex)
+			{
+				context.Response.StatusCode = 403;
+			}
 			catch (Exception exceptionObj)
 			{
 				//await HandleExceptionAsync(context, exceptionObj);

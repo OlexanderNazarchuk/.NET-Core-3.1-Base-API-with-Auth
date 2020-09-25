@@ -48,16 +48,16 @@ namespace EmptyAuth.Core.Services
 				if (loginResult.Succeeded)
 				{
 					var organizationClaims = await _context.UserClaims.Where(x => x.UserId == appUser.Id)
-						.Select(x=> x.ClaimType + "."+ x.ClaimValue)
+						.Select(x=> x.ClaimValue)
 						.ToListAsync();
 
-					var plantClaims = await _context.Organizations.Select(x => new OrganizationDto
+					var plantClaims = await _context.Organizations.Select(x => new OrganizationAuthDto
 					{
 						Id = x.Id,
-						Plants = x.Plants.Select(x2 => new PlantDto
+						Plants = x.Plants.Select(x2 => new PlantAuthDto
 						{
 							Id = x2.Id,
-							Claims = x2.PlantUserClaims.Where(x=>x.UserId==appUser.Id).Select(x3 => x3.ClaimType+"."+x3.ClaimValue).ToList(),
+							Claims = x2.PlantUserClaims.Where(x=>x.UserId==appUser.Id).Select(x3 => x3.ClaimValue).ToList(),
 						}).ToList(),
 					})
 					.FirstOrDefaultAsync(x => x.Id == appUser.OrganizationId);
@@ -66,7 +66,7 @@ namespace EmptyAuth.Core.Services
 						Id = appUser.Id, 
 						Name = appUser.UserName, 
 						Email = appUser.Email,
-						Organization = new OrganizationDto()
+						Organization = new OrganizationAuthDto()
 						{
 							Id = (int)appUser.OrganizationId,
 							Claims = organizationClaims,

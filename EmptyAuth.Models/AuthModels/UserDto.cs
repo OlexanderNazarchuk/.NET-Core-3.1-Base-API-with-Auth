@@ -10,21 +10,26 @@ namespace EmptyAuth.Models.AuthModels
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Email { get; set; }
-		public OrganizationDto Organization { get; set; }
+		public OrganizationAuthDto Organization { get; set; }
 	}
 
-	public class OrganizationDto
+	public class OrganizationAuthDto
 	{
 		public int Id { get; set; }
-		public IList<PlantDto> Plants { get; set; }
+		public IList<PlantAuthDto> Plants { get; set; }
 		public IList<string> Claims { get; set; }
 
+	}
+
+	public class PlantAuthDto
+	{
+		public int Id { get; set; }
+		public IList<string> Claims { get; set; }
 	}
 
 	public class PlantDto
 	{
 		public int Id { get; set; }
-		public IList<string> Claims { get; set; }
-		
+		public string Name { get; set; }
 	}
 }

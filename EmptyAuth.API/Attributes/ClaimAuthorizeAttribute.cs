@@ -36,7 +36,7 @@ namespace EmptyAuth.API.Attributes
 		{
 			var permissionsClaim = context.HttpContext.User
 				.Claims.FirstOrDefault(c => c.Type == "Permissions").Value;
-			var org = JsonConvert.DeserializeObject<OrganizationDto>(permissionsClaim);
+			var org = JsonConvert.DeserializeObject<OrganizationAuthDto>(permissionsClaim);
 
 			var hasClaim = org.Claims.Any(x => x == _claim.Type+"."+_claim.Value);
 			if (!hasClaim)
